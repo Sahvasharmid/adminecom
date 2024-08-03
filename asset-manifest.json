@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/adminecom/static/css/main.637c36d2.css",
+    "main.js": "/adminecom/static/js/main.e9502aee.js",
+    "static/js/453.68d2f560.chunk.js": "/adminecom/static/js/453.68d2f560.chunk.js",
+    "static/media/ecomfeature.jpg": "/adminecom/static/media/ecomfeature.01da2dd10208b8066739.jpg",
+    "index.html": "/adminecom/index.html",
+    "main.637c36d2.css.map": "/adminecom/static/css/main.637c36d2.css.map",
+    "main.e9502aee.js.map": "/adminecom/static/js/main.e9502aee.js.map",
+    "453.68d2f560.chunk.js.map": "/adminecom/static/js/453.68d2f560.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.637c36d2.css",
+    "static/js/main.e9502aee.js"
+  ]
+}
