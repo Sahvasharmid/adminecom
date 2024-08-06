@@ -27,7 +27,11 @@ const CustomContainer=styled(Container)(({theme})=>({
       justifyContent: "center",
       alignItems: "center",
       
-  
+      [theme.breakpoints.down('md')]: {
+        height:"45vh",
+        width:"100%"
+        // Adjust width for small screens and up
+      },
   }));
   
 const LoginPage = () => {
@@ -97,15 +101,27 @@ useEffect(()=>{
   return (
   <CustomContainer maxWidth="xxl">
     
-        <Container maxWidth="md" sx={(theme)=>({backgroundColor:"white",height:"80vh",display:"flex",padding:"0px!important"})}>
-            <Box sx={{width:"50%"}}>
+        <Container maxWidth="md" sx={(theme)=>({backgroundColor:"white",height:"80vh",display:"flex",padding:"0px!important",[theme.breakpoints.down('md')]: {
+   flexDirection:"column",
+   height:"100vh",
+   width:"100%"
+   // Adjust width for small screens and up
+  },})}>
+            <Box sx={(theme)=>({width:"50%",[theme.breakpoints.down('md')]: {
+    width: "100%", // Adjust width for small screens and up
+  },})}>
               <CustomBox></CustomBox>
               
             </Box>
 
-            <Box sx={{display:"flex",height:"100%",justifyContent:"center",alignItems:"center",width:"50%"
-                       }}>
-              <Box sx={{height:"50%",paddingBottom:"50px",width:"70%"}}>
+            <Box sx={(theme)=>({display:"flex",height:"100%",justifyContent:"center",alignItems:"center",width:"50%",
+            [theme.breakpoints.down('md')]: {
+              width: "100%", // Adjust width for small screens and up
+            },
+                       })}>
+              <Box sx={(theme)=>({height:"50%",paddingBottom:"50px",width:"70%",[theme.breakpoints.down('md')]:{
+                width:"90%"
+              }})}>
               <Box>
               <Typography variant='h6' sx={{color:(theme)=>theme.palette.secondary.main,fontWeight:"bold"}}>Welcome to  InstaShipin</Typography>
                 <Typography variant='h6' sx={{color:(theme)=>theme.palette.secondary.main,fontStyle:"italic"}}>Ship Smarter Today</Typography>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -98,7 +98,7 @@ const theme=useTheme()
   };
 const handleLogout=()=>{
   logout();
-  navigate('/login')
+  navigate('/adminecom')
 }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -177,14 +177,9 @@ const handleLogout=()=>{
           >
             {open ?  <ChevronLeftIcon />:<ChevronRightIcon></ChevronRightIcon>}
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-              >
-            ECOM
-          </Typography>
-
+        
+          <ShoppingCartIcon></ShoppingCartIcon>
+         
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
          <Typography  sx={{ marginRight: 2, display: 'flex',

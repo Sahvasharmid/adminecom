@@ -20,7 +20,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const ContentBox = styled(Box)(({ theme }) => ({
   flexGrow: 1,
-  padding: theme.spacing(5),
+  padding: theme.spacing(2),
   backgroundColor: '#E9EAEC',
 }));
 

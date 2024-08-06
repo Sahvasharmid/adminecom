@@ -1,12 +1,4 @@
 /* styles.css */
 
-/* Apply styles for mobile screens */
-@media (max-width: 600px) {
-    .css-2dum1v-MuiDrawer-docked {
-      display: none !important;
-    }
-    .css-9h98sf {
-        padding: 20px!important;
-    }
-  }
+
   

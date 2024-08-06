@@ -37,7 +37,7 @@ const ProfileTab = () => {
   return (
     <Card sx={{ maxWidth: '100%', margin: 'auto', marginTop: 2 }}>
       <CardContent>
-        <Box sx={{ padding: 2 }}>
+        <Box sx={{ padding: 1 }}>
           <Typography variant="h6">Profile Details</Typography>
           {userData.avatar && (
             <Typography>

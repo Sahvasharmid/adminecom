@@ -13,7 +13,7 @@ import BasicModal from './Modal';
 import { useProducts } from '../../utils/ProductContext';
 import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
-import './StickyHeader.css'
+import { styled, useTheme} from '@mui/material/styles';
 const columns = [
   { id: 'avatar', label: 'CategoryImage', minWidth: 170 },
   { id: 'title', label: 'Name', minWidth: 170, align: 'left' },
@@ -27,7 +27,21 @@ const columns = [
   { id: 'category', label: 'Category', minWidth: 170, align: 'center' },
   { id: 'buttons', label: 'Actions', minWidth: 170 },
 ];
-
+const StyledBox = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(2),
+  width: '30%', // Full width on mobile
+  display: 'flex', // Ensure the box is a flex container
+  flexGrow: 1, // Allow the box to grow and fill available space
+  [theme.breakpoints.down('sm')]: {
+    width: '100%', // Adjust width for larger screens
+  },
+}));
+const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
+  width: '100%', // Full width by default
+  [theme.breakpoints.up('sm')]: {
+    width: 300, // Adjust width for small screens and up
+  },
+}));
 export default function StickyHeadTable() {
   const { products } = useProducts(); // Use products from context
   const [page, setPage] = React.useState(0);
@@ -73,15 +87,15 @@ export default function StickyHeadTable() {
           xs:'column',
           md:'row'
         } }}>
-        <Box sx={{ p: 2, width: '30%', flexGrow: '1' }}>
-          <Autocomplete
+        <StyledBox>
+          <StyledAutocomplete
             disablePortal
             options={products.map((row) => row.title)}
-            sx={{ width: 300 }}
+            sx={{ width: "100%" }}
             renderInput={(params) => <TextField {...params} label="Search" variant="outlined" fullWidth />}
             onChange={handleSearch}
           />
-        </Box>
+        </StyledBox>
         <Box sx={{ p: 2 }}>
           <BasicModal mode="add" />
         </Box>
