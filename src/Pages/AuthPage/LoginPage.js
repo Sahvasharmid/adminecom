@@ -138,9 +138,9 @@ useEffect(()=>{
       noValidate
       autoComplete="off"
     >
-      <TextField id="outlined-email" label="Email" placeholder='john@mail.com' variant="outlined"  value={email} onChange={handleEmailChange} sx={{marginLeft:"0px!important"}} required />
+      <TextField id="outlined-email" label="Email" placeholder='admin@mail.com' variant="outlined"  value={email} onChange={handleEmailChange} sx={{marginLeft:"0px!important"}} required />
   
-      <TextField id="outlined-password" label="Password" placeholder='changeme' variant="outlined"  value={password} onChange={handlePasswordChange} sx={{marginLeft:"0px!important"}} required/>
+      <TextField id="outlined-password" label="Password" placeholder='admin123' variant="outlined"  value={password} onChange={handlePasswordChange} sx={{marginLeft:"0px!important"}} required/>
       <Button variant='contained' sx={{backgroundColor:(theme)=>theme.palette.secondary.main,color:"white",marginLeft:"0px!important"}} onClick={handleLogin}>Submit</Button>
      
       <FormControlLabel
