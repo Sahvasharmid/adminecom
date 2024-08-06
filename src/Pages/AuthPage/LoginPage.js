@@ -28,7 +28,7 @@ const CustomContainer=styled(Container)(({theme})=>({
       alignItems: "center",
       
       [theme.breakpoints.down('md')]: {
-        height:"45vh",
+        height:"55vh",
         width:"100%"
         // Adjust width for small screens and up
       },
@@ -116,15 +116,16 @@ useEffect(()=>{
 
             <Box sx={(theme)=>({display:"flex",height:"100%",justifyContent:"center",alignItems:"center",width:"50%",
             [theme.breakpoints.down('md')]: {
-              width: "100%", // Adjust width for small screens and up
+              width: "100%",
+              height:"auto" // Adjust width for small screens and up
             },
                        })}>
               <Box sx={(theme)=>({height:"50%",paddingBottom:"50px",width:"70%",[theme.breakpoints.down('md')]:{
                 width:"90%"
               }})}>
               <Box>
-              <Typography variant='h6' sx={{color:(theme)=>theme.palette.secondary.main,fontWeight:"bold"}}>Welcome to  InstaShipin</Typography>
-                <Typography variant='h6' sx={{color:(theme)=>theme.palette.secondary.main,fontStyle:"italic"}}>Ship Smarter Today</Typography>
+              <Typography variant='h6' sx={(theme)=>({color:theme.palette.secondary.main,fontWeight:"bold",[theme.breakpoints.down('md')]:{textAlign:"center"}})}>Welcome to  InstaShipin</Typography>
+                <Typography variant='h6' sx={(theme)=>({color:theme.palette.secondary.main,fontStyle:"italic",[theme.breakpoints.down('md')]:{textAlign:"center"}})}>Ship Smarter Today</Typography>
                 {error && (
               <Alert severity="error" sx={{ backgroundColor: 'transparent', color: 'red', border: 'none', boxShadow: 'none', padding: 0 }}>
                 {error}
