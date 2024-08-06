@@ -16,9 +16,10 @@ import Settings from './Pages/Admin/Settings/Settings';
 const App = () => {
   return (
     <div>
-      <BrowserRouter>
+      
+      <BrowserRouter basename='adminecom'>
         <Routes>
-          <Route path="/adminecom" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/add" element={<AddLinkForm/>} />
         
           {/* Nested route for admin dashboard */}
