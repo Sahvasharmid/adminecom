@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import CountUp from 'react-countup';
-
+import './Dash.css'
 import { Typography ,Stack} from '@mui/material';
 export const DashboardCard = ({title,value,className}) => {
   return (
