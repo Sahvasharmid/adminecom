@@ -13,9 +13,9 @@ const App = () => {
   return (
     <div>
       
-      <BrowserRouter>
+      <BrowserRouter basename='/adminecom'>
         <Routes>
-          <Route exact path="/adminecom" element={<LoginPage />} />
+          <Route exact path="/" element={<LoginPage />} />
       
         
           {/* Nested route for admin dashboard */}

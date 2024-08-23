@@ -98,7 +98,7 @@ const theme=useTheme()
   };
 const handleLogout=()=>{
   logout();
-  navigate('/adminecom')
+  navigate('/')
 }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
