@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=/" />
+    <title>Page Not Found</title>
+    <script type="text/javascript">
+      // Number of path segments to keep in the URL
+      var pathSegmentsToKeep = 1;
+
+      // Get the current location
+      var l = window.location;
+
+      // Rebuild the URL by keeping the specified number of path segments
+      var newUrl = l.protocol + "//" + l.host +
+        l.pathname.split("/").slice(0, pathSegmentsToKeep + 1).join("/") + 
+        "/?/" + 
+        l.pathname.slice(1).split("/").slice(pathSegmentsToKeep).join("/").replace(/&/g, "~and~") +
+        (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "");
+
+      // Redirect to the new URL
+      l.replace(newUrl);
+    </script>
+  </head>
+  <body>
+    <!-- Optional: Add a message for users who have JavaScript disabled -->
+    <noscript>
+      <p>If you are not redirected, <a href="/">click here</a> to return to the home page.</p>
+    </noscript>
+  </body>
+</html>
