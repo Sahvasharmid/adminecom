@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Typography, Box, Card, CardContent } from '@mui/material';
-import { AuthContext } from '../../../utils/AuthContext'; // Adjust the path as needed
+import { useSelector } from 'react-redux';
 
 const ProfileTab = () => {
-  const { auth } = useContext(AuthContext);
+  const { user, token } = useSelector((state) => state.auth); // Accessing user and token from auth slice
   const [userData, setUserData] = useState({
     email: '',
     name: '',
@@ -14,10 +14,15 @@ const ProfileTab = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
-      if (auth.isAuthenticated) {
+      if (user) {
         try {
           const response = await axios.get(
-            `https://api.escuelajs.co/api/v1/users/${auth.user.id}`
+            `https://api.escuelajs.co/api/v1/users/${user.id}`,
+            {
+              headers: {
+                'Authorization': `Bearer ${token}`, // Include token in the headers
+              },
+            }
           );
           setUserData({
             email: response.data.email || '',
@@ -32,7 +37,7 @@ const ProfileTab = () => {
     };
 
     fetchUserDetails();
-  }, [auth.isAuthenticated, auth.user.id]);
+  }, [user, token]); // Only depend on user and token
 
   return (
     <Card sx={{ maxWidth: '100%', margin: 'auto', marginTop: 2 }}>

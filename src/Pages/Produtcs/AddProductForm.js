@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../redux/features/ProductSlice/ProductSlice'; // Adjust the import path accordingly
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -7,17 +9,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import { useProducts } from '../../utils/ProductContext';
 
 const AddProductForm = () => {
-  const { addProduct } = useProducts();
+  const dispatch = useDispatch(); // Access the Redux dispatch function
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [previewUrl, setPreviewUrl] = useState(""); // New state for image preview
+  const [previewUrl, setPreviewUrl] = useState(""); // State for image preview
 
   useEffect(() => {
     // Fetch categories from the API
@@ -30,20 +31,12 @@ const AddProductForm = () => {
       });
   }, []);
 
-  // Handle image URL input change
   const handleImageUrlChange = (e) => {
     const url = e.target.value;
     setImageUrl(url);
-
-    // Check if URL is valid and set the preview URL
-    if (isValidUrl(url)) {
-      setPreviewUrl(url);
-    } else {
-      setPreviewUrl('');
-    }
+    setPreviewUrl(isValidUrl(url) ? url : '');
   };
 
-  // Validate URL format
   const isValidUrl = (url) => {
     try {
       new URL(url);
@@ -57,9 +50,9 @@ const AddProductForm = () => {
     e.preventDefault();
 
     const productData = {
-      title: title,
+      title,
       price: parseFloat(price),
-      description: description,
+      description,
       categoryId: parseInt(categoryId),
       images: [imageUrl] // Assuming images is an array in your API structure
     };
@@ -67,7 +60,7 @@ const AddProductForm = () => {
     try {
       const response = await axios.post('https://api.escuelajs.co/api/v1/products/', productData);
       console.log('Product created:', response.data);
-      addProduct(response.data);
+      dispatch(addProduct(response.data)); // Dispatch the addProduct action to Redux
 
       // Optionally reset form fields or show a success message
       setTitle("");
@@ -142,6 +135,7 @@ const AddProductForm = () => {
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
             label="Category"
+            required
           >
             {categories.map((category) => (
               <MenuItem key={category.id} value={category.id}>
@@ -166,7 +160,7 @@ const AddProductForm = () => {
           <Box mt={2} textAlign="center">
             <img
               src={previewUrl}
-              alt="Image Preview"
+              alt="Preview"
               style={{
                 width: '100%',
                 maxWidth: '300px',

@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import { AuthContext } from '../../../utils/AuthContext'; // Adjust the path as needed
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProfile } from '../../../redux/features/AuthSlice/AuthSlice'; // Adjust the path as needed
 
 const UpdateProfile = () => {
-  const { auth } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state) => state.auth); // Accessing user and token from auth slice
   const [userData, setUserData] = useState({
     email: '',
     name: '',
@@ -13,6 +15,17 @@ const UpdateProfile = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Fetch user data to pre-fill the form
+  useEffect(() => {
+    if (user) {
+      setUserData({
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar, // Assuming you may use it later
+      });
+    }
+  }, [user]);
 
   const handleChangeInput = (event) => {
     const { name, value } = event.target;
@@ -26,7 +39,7 @@ const UpdateProfile = () => {
 
     try {
       const response = await axios.put(
-        `https://api.escuelajs.co/api/v1/users/${auth.user.id}`,
+        `https://api.escuelajs.co/api/v1/users/${user.id}`,
         {
           email: userData.email,
           name: userData.name,
@@ -34,13 +47,15 @@ const UpdateProfile = () => {
         },
         {
           headers: {
-            'Authorization': `Bearer ${auth.token}`,
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         }
       );
       console.log('Profile updated:', response.data);
       alert('Profile updated successfully');
+      // Optionally, you can dispatch an action to fetch the updated profile
+      dispatch(fetchProfile()); // Fetch updated profile
     } catch (err) {
       console.error('Error updating profile:', err.response?.data || err.message);
       setError(`Failed to update profile: ${err.response?.data?.message || err.message}`);
@@ -60,6 +75,7 @@ const UpdateProfile = () => {
           onChange={handleChangeInput}
           fullWidth
           margin="normal"
+          required
         />
         <TextField
           label="Name"
@@ -68,6 +84,7 @@ const UpdateProfile = () => {
           onChange={handleChangeInput}
           fullWidth
           margin="normal"
+          required
         />
         <TextField
           label="Password"
@@ -88,7 +105,7 @@ const UpdateProfile = () => {
             {loading ? 'Updating...' : 'Update Profile'}
           </Button>
         </Box>
-      {error && <Typography color="error">{error}</Typography>}
+        {error && <Typography color="error">{error}</Typography>}
       </form>
     </Box>
   );

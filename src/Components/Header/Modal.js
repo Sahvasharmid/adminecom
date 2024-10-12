@@ -6,18 +6,19 @@ import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
-import DeleteIcon from '@mui/icons-material/Delete';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { useDispatch } from 'react-redux';
 import AddProductForm from '../../Pages/Produtcs/AddProductForm';
 import EditProduct from '../../Pages/Produtcs/EditProduct';
-import { useProducts } from '../../utils/ProductContext';
-import axios from 'axios';
+import {  removeProduct } from '../../redux/features/ProductSlice/ProductSlice';
+
 const iconStyle = {
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
 };
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -30,37 +31,37 @@ const style = {
   p: 4,
 };
 
-function BasicModal({ mode,productId}) {
-  const{removeProduct}=useProducts()
+function BasicModal({ mode, productId }) {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-const handleDelete=async()=>{
-  try {
-///
-delete(`https://api.escuelajs.co/api/v1/products/${productId}`);
-    removeProduct(productId);
-    alert('Product successfully deleted!');
-  } catch (error) {
-    console.error('Error deleting product:', error);
-    alert('Failed to delete product. Please try again later.');
-  }
-};
 
-  
+  const handleDelete = async () => {
+    try {
+      // Dispatch removeProduct action to delete product from store
+      dispatch(removeProduct(productId));
+      alert('Product successfully deleted!');
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      alert('Failed to delete product. Please try again later.');
+    }
+    handleClose();
+  };
 
   return (
     <div>
-     {mode === 'add' && (
-        <Button variant='contained' onClick={handleOpen} endIcon={<AddCircleIcon />}>
+      {mode === 'add' && (
+        <Button variant="contained" onClick={handleOpen} endIcon={<AddCircleIcon />}>
           Add
         </Button>
       )}
-     {(mode === 'edit' || mode === 'delete') && (
-  <Typography onClick={handleOpen} style={iconStyle}>
-    {mode === 'edit' ? <EditOutlinedIcon /> : <DeleteOutlinedIcon />}
-  </Typography>
-)}
+      {(mode === 'edit' || mode === 'delete') && (
+        <Typography onClick={handleOpen} style={iconStyle}>
+          {mode === 'edit' ? <EditOutlinedIcon /> : <DeleteOutlinedIcon />}
+        </Typography>
+      )}
       <Modal
         open={open}
         onClose={handleClose}
@@ -84,25 +85,18 @@ delete(`https://api.escuelajs.co/api/v1/products/${productId}`);
             {mode === 'edit' ? (
               <>
                 <EditProduct productId={productId} />
-    
               </>
             ) : mode === 'delete' ? (
-              
               <Box>
-                <Typography variant="h6" component="p" sx={{p:2}}>
+                <Typography variant="h6" component="p" sx={{ p: 2 }}>
                   Are you sure you want to delete this product?
                 </Typography>
-                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center",mb:2 }}>
-                <Button
-                onClick={handleDelete}
-                  variant="contained"
-                  color="error"
-              
-                
-                >
-                  Confirm Delete
-                </Button>
-              </Box></Box>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
+                  <Button onClick={handleDelete} variant="contained" color="error">
+                    Confirm Delete
+                  </Button>
+                </Box>
+              </Box>
             ) : (
               <AddProductForm />
             )}
@@ -112,4 +106,5 @@ delete(`https://api.escuelajs.co/api/v1/products/${productId}`);
     </div>
   );
 }
-export default BasicModal
+
+export default BasicModal;

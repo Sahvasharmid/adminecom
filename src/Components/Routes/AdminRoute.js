@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { AuthContext } from '../../utils/AuthContext';
-const AdminRoute = ({ children }) => {
-  const { auth } = useContext(AuthContext);
+import { useSelector } from 'react-redux';
 
-  if (!auth.isAuthenticated || auth.user.role !== 'admin') {
+const AdminRoute = () => {
+  const { user, isAuthenticated } = useSelector((state) => state.auth); // Accessing auth state from Redux
+
+  // Check if the user is authenticated and is an admin
+  if (!isAuthenticated || user.role !== 'admin') {
     return <Navigate to="/" />;
   }
 
-  return <Outlet></Outlet>;
+  return <Outlet />;
 };
+
 
 export default AdminRoute;

@@ -6,24 +6,26 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import ThemeAppProvider from './Components/AppThemeProvider/ThemeProvider';
-import AuthProvider from './utils/AuthContext';
-import { OpenProvider } from './utils/OpenContext';
-import { ProductProvider } from './utils/ProductContext';
 
+import { OpenProvider } from './utils/OpenContext';
+import { Provider } from 'react-redux';
+import { store ,persistor} from './redux/apps/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
   <OpenProvider>
-  <AuthProvider>
+<Provider store={store}>
 
+<PersistGate loading={null} persistor={persistor}>
   <ThemeAppProvider>
   
-    <ProductProvider><App/></ProductProvider>
+   <App/>
 </ThemeAppProvider> 
-   
-  </AuthProvider>
+   </PersistGate>
+  </Provider>
   </OpenProvider>
   
 

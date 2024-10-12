@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
+// EditProduct.jsx
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useProducts } from '../../utils/ProductContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProduct } from '../../redux/features/ProductSlice/ProductSlice'; // Adjust the import based on your file structure
 
 const EditProduct = ({ productId }) => {
-  const { updateProduct } = useProducts();
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState(0);
+  const dispatch = useDispatch();
+  
+  // Fetch the product details from the Redux store
+  const product = useSelector(state => state.products.products.find(p => p.id === productId)) || {};
+  
+  const [title, setTitle] = useState(product.title || "");
+  const [price, setPrice] = useState(product.price || 0);
 
   useEffect(() => {
-    // Fetch product details when productId changes
-    if (productId) {
-      axios.get(`https://api.escuelajs.co/api/v1/products/${productId}`)
-        .then(response => {
-          const product = response.data;
-          setTitle(product.title);
-          setPrice(product.price);
-        })
-        .catch(error => {
-          console.error('Error fetching product details:', error);
-        });
+    // Update local state when productId or product changes
+    if (productId && product) {
+      setTitle(product.title);
+      setPrice(product.price);
     }
-  }, [productId]);
+  }, [productId, product]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const productData = {
+      id: productId,
       title: title,
       price: parseFloat(price)
     };
@@ -37,8 +37,8 @@ const EditProduct = ({ productId }) => {
       const response = await axios.put(`https://api.escuelajs.co/api/v1/products/${productId}`, productData);
       console.log('Product updated:', response.data);
 
-      // Immediately update local state or context
-      updateProduct(response.data);
+      // Dispatch the update action to the Redux store
+      dispatch(updateProduct(response.data));
 
       // Optionally reset form fields or show a success message
       setTitle("");
